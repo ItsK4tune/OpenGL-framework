@@ -80,6 +80,8 @@ bool ResourceManager::LoadFromFile(const std::string &filePath)
                 else
                     modelMap[id] = model;
             }
+
+            std::cout << "[ResourceManager::LoadFromFile] Loaded " << modelMap.size() << " models." << std::endl;
         }
 
         else if (line.rfind("#Texture", 0) == 0)
@@ -101,7 +103,7 @@ bool ResourceManager::LoadFromFile(const std::string &filePath)
 
                 std::cout << "[ResourceManager::LoadFromFile] Texture[" << id << "]: " << path << std::endl;
                 auto texture = std::make_shared<Texture>(path);
-                if (!texture || texture->meshes.empty())
+                if (!texture || texture->ID == 0)
                 {
                     std::cerr << "[ResourceManager::LoadFromFile] Failed to load model: " << path << std::endl;
                     continue;
@@ -109,6 +111,8 @@ bool ResourceManager::LoadFromFile(const std::string &filePath)
                 else
                     textureMap[id] = texture;
             }
+
+            std::cout << "[ResourceManager::LoadFromFile] Loaded " << textureMap.size() << " textures." << std::endl;
         }
 
         else if (line.rfind("#Shader", 0) == 0)
@@ -151,6 +155,8 @@ bool ResourceManager::LoadFromFile(const std::string &filePath)
                 else
                     shaderMap[id] = shader;
             }
+
+            std::cout << "[ResourceManager::LoadFromFile] Loaded " << shaderMap.size() << " shaders." << std::endl;
         }
     }
 
