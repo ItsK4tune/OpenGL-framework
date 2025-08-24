@@ -9,10 +9,15 @@ ResourceManager &ResourceManager::Instance()
     return instance;
 }
 
+ResourceManager::~ResourceManager()
+{
+    Cleanup();
+}
+
 void ResourceManager::Cleanup()
 {
     modelMap.clear();
-    // textureMap.clear();
+    textureMap.clear();
     shaderMap.clear();
 }
 
@@ -37,7 +42,7 @@ std::shared_ptr<Shader> ResourceManager::GetShader(const std::string &id) const
 bool ResourceManager::LoadFromFile(const std::string &filePath)
 {
     std::cout << "[ResourceManager::LoadFromFile] Loading resources..." << std::endl;
-    std::string fullPath = "resource/" + filePath;
+    std::string fullPath = "resource/script/" + filePath;
 
     std::ifstream file(fullPath);
     if (!file.is_open())
@@ -162,26 +167,4 @@ bool ResourceManager::LoadFromFile(const std::string &filePath)
 
     std::cout << "[ResourceManager::LoadFromFile] Finished loading resources" << std::endl;
     return true;
-}
-
-void ResourceManager::Draw(const glm::mat4& view, const glm::mat4& projection)
-{
-    for (const auto &pair : shaderMap)
-    {
-        const auto &shader = pair.second;
-        if (shader)
-        {
-            shader->Use();
-            shader->SetMat4("view", view);
-            shader->SetMat4("projection", projection);
-            break;
-        }
-    }
-    
-    for (const auto &pair : modelMap)
-    {
-        const auto &model = pair.second;
-        if (model)
-            model->Draw();
-    }
 }

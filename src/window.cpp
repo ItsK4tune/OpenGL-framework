@@ -1,8 +1,8 @@
 #include "window.h"
 #include <iostream>
 #include "resource_manager.h"
+#include "scene_manager.h"
 #include "global.h"
-#include "camera.h"
 
 Window::Window(int major, int minor, const std::string &title)
     : m_window(nullptr), m_title(title), m_major(major), m_minor(minor)
@@ -52,20 +52,19 @@ void Window::SetCallback()
 
 void Window::Initialize()
 {
-    ResourceManager::Instance().LoadFromFile("script/load/test.txt");
+    ResourceManager::Instance().LoadFromFile("load/test.txt");
+    SceneManager::Instance().LoadFromFile("scene/test.txt");
 }
 
 void Window::MainLoop()
 {
-    auto camera = std::make_shared<Camera>(45.0f, 0.1f, 100.0f);
-
     while (!glfwWindowShouldClose(m_window))
     {
         glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
         glEnable(GL_DEPTH_TEST);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        ResourceManager::Instance().Draw(camera->GetViewMatrix(), camera->GetPerspectiveMatrix());
+        SceneManager::Instance().Draw();
 
         glfwSwapBuffers(m_window);
         glfwPollEvents();

@@ -21,11 +21,10 @@ public:
     std::shared_ptr<Shader> GetShader(const std::string &id) const;
 
     void Cleanup();
-    void Draw(const glm::mat4& view, const glm::mat4& projection);
 
 private:
     ResourceManager() = default;
-    ~ResourceManager() = default;
+    ~ResourceManager();
 
     std::unordered_map<std::string, std::shared_ptr<Model>> modelMap;
     std::unordered_map<std::string, std::shared_ptr<Texture>> textureMap;
