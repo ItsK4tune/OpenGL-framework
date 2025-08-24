@@ -89,7 +89,25 @@ bool ResourceManager::LoadFromFile(const std::string &filePath)
 
             for (int i = 0; i < count; i++)
             {
-                // TODO: đọc texture sau này
+                std::string id, fileToken, path;
+                std::getline(file, line);
+                std::istringstream issId(line);
+                issId >> fileToken >> id;
+
+                std::getline(file, line);
+                size_t start = line.find('"');
+                size_t end = line.find_last_of('"');
+                path = line.substr(start + 1, end - start - 1);
+
+                std::cout << "[ResourceManager::LoadFromFile] Texture[" << id << "]: " << path << std::endl;
+                auto texture = std::make_shared<Texture>(path);
+                if (!texture || texture->meshes.empty())
+                {
+                    std::cerr << "[ResourceManager::LoadFromFile] Failed to load model: " << path << std::endl;
+                    continue;
+                }
+                else
+                    textureMap[id] = texture;
             }
         }
 
