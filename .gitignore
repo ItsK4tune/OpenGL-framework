@@ -1,0 +1,10 @@
+# IDE folders
+.vs/
+.vscode/
+
+# Build folders
+BIN/
+BUILD/
+
+# Resource folder
+resource/
