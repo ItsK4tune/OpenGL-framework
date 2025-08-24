@@ -22,11 +22,11 @@ std::shared_ptr<Model> ResourceManager::GetModel(const std::string &id) const
     return (it != modelMap.end()) ? it->second : nullptr;
 }
 
-// std::shared_ptr<Texture> ResourceManager::GetTexture(const std::string &id) const
-// {
-//     auto it = textureMap.find(id);
-//     return (it != textureMap.end()) ? it->second : nullptr;
-// }
+std::shared_ptr<Texture> ResourceManager::GetTexture(const std::string &id) const
+{
+    auto it = textureMap.find(id);
+    return (it != textureMap.end()) ? it->second : nullptr;
+}
 
 std::shared_ptr<Shader> ResourceManager::GetShader(const std::string &id) const
 {
