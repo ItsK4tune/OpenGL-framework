@@ -63,6 +63,30 @@ void Shader::SetMat4(const std::string &name, const glm::mat4 &value) const
                        &value[0][0]);
 }
 
+template<>
+void Shader::SetArray<int>(const std::string& name, const std::vector<int>& values) const
+{
+    glUniform1iv(glGetUniformLocation(ID, name.c_str()), values.size(), values.data());
+}
+
+template<>
+void Shader::SetArray<float>(const std::string& name, const std::vector<float>& values) const
+{
+    glUniform1fv(glGetUniformLocation(ID, name.c_str()), values.size(), values.data());
+}
+
+template<>
+void Shader::SetArray<glm::vec3>(const std::string& name, const std::vector<glm::vec3>& values) const
+{
+    glUniform3fv(glGetUniformLocation(ID, name.c_str()), values.size(), (const float*)values.data());
+}
+
+template<>
+void Shader::SetArray<glm::mat4>(const std::string& name, const std::vector<glm::mat4>& values) const
+{
+    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), values.size(), GL_FALSE, (const float*)values.data());
+}
+
 std::string Shader::LoadShaderSource(const std::string &path)
 {
     std::ifstream file;
